@@ -1,73 +1,63 @@
 <template>
-  <div>
-    <div class="table-page-search-wrapper">
-      <a-form layout="inline">
-        <a-row :gutter="48">
-          <a-col :md="8" :sm="24">
-            <a-form-item label="部门" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
-              <a-tree-select showSearch style="width:100%" :value="value" :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }" placeholder='Please select' allowClear treeDefaultExpandAll @change="onChange">
-                <a-tree-select-node value='parent 1' title='parent 1' key='0-1'>
-                  <a-tree-select-node value='parent 1-0' title='parent 1-0' key='0-1-1'>
-                    <a-tree-select-node value='leaf1' title='my leaf' key='random' />
-                    <a-tree-select-node value='leaf2' title='your leaf' key='random1' />
-                  </a-tree-select-node>
-                  <a-tree-select-node value='parent 1-1' title='parent 1-1' key='random2'>
-                    <a-tree-select-node value='sss' key='random3'>
-                      <b style="color: #08c" slot="title">sss</b>
-                    </a-tree-select-node>
-                  </a-tree-select-node>
-                </a-tree-select-node>
-              </a-tree-select>
-            </a-form-item>
-          </a-col>
-          <a-col :md="8" :sm="24">
-            <a-form-item label="在职状态" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
-              <a-select placeholder="请选择" default-value="0">
-                <a-select-option value="0">全部</a-select-option>
-                <a-select-option value="1">关闭</a-select-option>
-                <a-select-option value="2">运行中</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-          <template v-if="advanced">
-            <a-col :md="8" :sm="24">
-              <a-form-item label="离职类型" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
-                <a-select placeholder="请选择" default-value="0">
-                  <a-select-option value="0">全部</a-select-option>
-                  <a-select-option value="1">关闭</a-select-option>
-                  <a-select-option value="2">运行中</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="入职时间段" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
-                <!--<a-range-picker @change="onChange" style="width: 100%;" v-model='time' format='YYYY-MM-DD' />-->
-                <attd-date-picker :show.sync="time"></attd-date-picker>
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="离职时间段" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
-                <a-range-picker @change="onChange" style="width: 100%;" />
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="姓名" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
-                <a-input placeholder="请输入" />
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="手机号码" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
-                <a-input placeholder="请输入" />
-              </a-form-item>
-            </a-col>
-            <a-col :md="8" :sm="24">
-              <a-form-item label="卡号" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
-                <a-input placeholder="请输入" />
-              </a-form-item>
-            </a-col>
-          </template>
-          <a-col :md="8" :sm="24">
-            <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
+	<div>
+		<div class="table-page-search-wrapper">
+			<a-form layout="inline">
+				<a-row :gutter="48">
+					<a-col :md="8" :sm="24">
+						<a-form-item label="部门" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
+							<a-tree-select showSearch style="width:100%" :value="value" :treeData="data" :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }" placeholder='Please select' allowClear treeDefaultExpandAll @change="onChange">
+								
+							</a-tree-select>
+						</a-form-item>
+					</a-col>
+					<a-col :md="8" :sm="24">
+						<a-form-item label="在职状态" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
+							<a-select placeholder="请选择" default-value="0">
+								<a-select-option value="0">全部</a-select-option>
+								<a-select-option value="1">关闭</a-select-option>
+								<a-select-option value="2">运行中</a-select-option>
+							</a-select>
+						</a-form-item>
+					</a-col>
+					<template v-if="advanced">
+						<a-col :md="8" :sm="24">
+							<a-form-item label="离职类型" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
+								<a-select placeholder="请选择" default-value="0">
+									<a-select-option value="0">全部</a-select-option>
+									<a-select-option value="1">关闭</a-select-option>
+									<a-select-option value="2">运行中</a-select-option>
+								</a-select>
+							</a-form-item>
+						</a-col>
+						<a-col :md="8" :sm="24">
+							<a-form-item label="入职时间段" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
+								<!--<a-range-picker @change="onChange" style="width: 100%;" v-model='time' format='YYYY-MM-DD' />-->
+								<attd-date-picker :show.sync="time"></attd-date-picker>
+							</a-form-item>
+						</a-col>
+						<a-col :md="8" :sm="24">
+							<a-form-item label="离职时间段" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
+								<a-range-picker @change="onChange" style="width: 100%;" />
+							</a-form-item>
+						</a-col>
+						<a-col :md="8" :sm="24">
+							<a-form-item label="姓名" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
+								<a-input placeholder="请输入" />
+							</a-form-item>
+						</a-col>
+						<a-col :md="8" :sm="24">
+							<a-form-item label="手机号码" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
+								<a-input placeholder="请输入" />
+							</a-form-item>
+						</a-col>
+						<a-col :md="8" :sm="24">
+							<a-form-item label="卡号" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }">
+								<a-input placeholder="请输入" />
+							</a-form-item>
+						</a-col>
+					</template>
+					<a-col :md="8" :sm="24">
+						<span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
               <a-button type="primary">查询</a-button>
               <a-button style="margin-left: 8px">重置</a-button>
               <a @click="toggleAdvanced" style="margin-left: 8px">
@@ -75,95 +65,2264 @@
                 <a-icon :type="advanced ? 'up' : 'down'"/>
               </a>
             </span>
-          </a-col>
-        </a-row>
+					</a-col>
+				</a-row>
 
-      </a-form>
+			</a-form>
 
-      <a-modal title="Title" :visible="visible" :width="800">
-        <a-form :autoFormCreate="(form)=>{this.form = form}">
+			<a-modal title="Title" :visible="visible" :width="800">
+				<a-form :autoFormCreate="(form)=>{this.form = form}">
 
-          <a-form-item label="备注" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
-            <a-textarea rows="4" placeholder="" />
-          </a-form-item>
+					<a-form-item label="备注" :labelCol="{span: 4}" :wrapperCol="{span: 20}">
+						<a-textarea rows="4" placeholder="" />
+					</a-form-item>
 
-          <a-form-item label="请输入" :labelCol="{span:4}" :wrapperCol="{span: 20}">
-            <a-input placeholder="" />
-          </a-form-item>
+					<a-form-item label="请输入" :labelCol="{span:4}" :wrapperCol="{span: 20}">
+						<a-input placeholder="" />
+					</a-form-item>
 
-          </a-form-item>
-       
-          <a-form-item label="备注" :labelCol="{span: 4}" :wrapperCol="{span: 20}" fieldDecoratorId="myabctime" >
-            <a-date-picker size="large" />
-          </a-form-item>
-        </a-form>
-      </a-modal>
-      <div @click="onshow">1222</div>
-      <!--<a-date-picker size="large" v-model="time" />-->
-    </div>
-  </div>
+					</a-form-item>
+
+					<a-form-item label="备注" :labelCol="{span: 4}" :wrapperCol="{span: 20}" fieldDecoratorId="myabctime">
+						<a-date-picker size="large" />
+					</a-form-item>
+				</a-form>
+			</a-modal>
+			<div @click="onshow">1222</div>
+			<!--<a-date-picker size="large" v-model="time" />-->
+		</div>
+	</div>
 </template>
 
 <script>
-  import TagsView from '@/components/TagsView'
-  import attdDatePicker from '@/components/attdDatePicker'
-  //import DatePicker from 'ant-design-vue/lib/date-picker'
-  // import ARangePicker from 'ant-design-vue/lib/date-picker/RangePicker'
-  import {
-    mapGetters
-  } from 'vuex'
-  export default {
-    name: "GlobalView",
-    data() {
-      return {
-        value: undefined,
-        advanced: false,
-        dateFormat: 'YYYY/MM/DD',
-        time: [],
-        visible: false,
-        time: ''
-        
+	import TagsView from '@/components/TagsView'
+	import attdDatePicker from '@/components/attdDatePicker'
+	//import DatePicker from 'ant-design-vue/lib/date-picker'
+	// import ARangePicker from 'ant-design-vue/lib/date-picker/RangePicker'
+	import {
+		mapGetters
+	} from 'vuex'
+	export default {
+		name: "GlobalView",
+		data() {
+			return {
+				value: undefined,
+				advanced: false,
+				dateFormat: 'YYYY/MM/DD',
+				time: [],
+				visible: false,
+				time: '',
+				data: [{
+					"value": "1",
+					"key": 1,
+					"label": "绍兴锦森印染有限公司",
+					"children": [{
+						"value": "10",
+						"key": 10,
+						"label": "总经办",
+						"searchTag": "总经办",
+						"uuid": "",
+						"userDept": 10
+					}, {
+						"value": "11",
+						"key": 11,
+						"label": "财务部",
+						"children": [{
+							"value": "17",
+							"key": 17,
+							"label": "财务",
+							"searchTag": "财务部/财务",
+							"uuid": "",
+							"userDept": 1101
+						}, {
+							"value": "19",
+							"key": 19,
+							"label": "统计",
+							"searchTag": "财务部/统计",
+							"uuid": "",
+							"userDept": 1103
+						}, {
+							"value": "18",
+							"key": 18,
+							"label": "仓库",
+							"children": [{
+								"value": "181",
+								"key": 181,
+								"label": "白坯仓库",
+								"searchTag": "财务部/仓库/白坯仓库",
+								"uuid": "",
+								"userDept": 150289
+							}, {
+								"value": "182",
+								"key": 182,
+								"label": "成品仓库",
+								"searchTag": "财务部/仓库/成品仓库",
+								"uuid": "",
+								"userDept": 150290
+							}, {
+								"value": "183",
+								"key": 183,
+								"label": "五金仓库",
+								"searchTag": "财务部/仓库/五金仓库",
+								"uuid": "",
+								"userDept": 150291
+							}],
+							"searchTag": "财务部/仓库",
+							"uuid": "",
+							"userDept": 1102
+						}],
+						"searchTag": "财务部",
+						"uuid": "",
+						"userDept": 11
+					}, {
+						"value": "12",
+						"key": 12,
+						"label": "企管部",
+						"children": [{
+							"value": "280",
+							"key": 280,
+							"label": "企管",
+							"searchTag": "企管部/企管",
+							"uuid": "",
+							"userDept": 150260
+						}, {
+							"value": "20",
+							"key": 20,
+							"label": "人事",
+							"searchTag": "企管部/人事",
+							"uuid": "",
+							"userDept": 1201
+						}, {
+							"value": "104",
+							"key": 104,
+							"label": "网管",
+							"searchTag": "企管部/网管",
+							"uuid": "",
+							"userDept": 150212
+						}, {
+							"value": "21",
+							"key": 21,
+							"label": "后勤",
+							"children": [{
+								"value": "26",
+								"key": 26,
+								"label": "驾驶",
+								"searchTag": "企管部/后勤/驾驶",
+								"uuid": "",
+								"userDept": 120203
+							}, {
+								"value": "27",
+								"key": 27,
+								"label": "清洁",
+								"searchTag": "企管部/后勤/清洁",
+								"uuid": "",
+								"userDept": 120204
+							}],
+							"searchTag": "企管部/后勤",
+							"uuid": "",
+							"userDept": 1202
+						}, {
+							"value": "22",
+							"key": 22,
+							"label": "保安",
+							"children": [{
+								"value": "202",
+								"key": 202,
+								"label": "常白班",
+								"searchTag": "企管部/保安/常白班",
+								"uuid": "",
+								"userDept": 150310
+							}, {
+								"value": "203",
+								"key": 203,
+								"label": "白班",
+								"searchTag": "企管部/保安/白班",
+								"uuid": "",
+								"userDept": 150311
+							}, {
+								"value": "204",
+								"key": 204,
+								"label": "晚班",
+								"searchTag": "企管部/保安/晚班",
+								"uuid": "",
+								"userDept": 150312
+							}],
+							"searchTag": "企管部/保安",
+							"uuid": "",
+							"userDept": 1203
+						}, {
+							"value": "23",
+							"key": 23,
+							"label": "业务部",
+							"children": [{
+								"value": "184",
+								"key": 184,
+								"label": "一二车间",
+								"searchTag": "企管部/业务部/一二车间",
+								"uuid": "",
+								"userDept": 150292
+							}, {
+								"value": "234",
+								"key": 234,
+								"label": "三车间",
+								"searchTag": "企管部/业务部/三车间",
+								"uuid": "",
+								"userDept": 150342
+							}],
+							"searchTag": "企管部/业务部",
+							"uuid": "",
+							"userDept": 1204
+						}, {
+							"value": "147",
+							"key": 147,
+							"label": "动力",
+							"children": [{
+								"value": "148",
+								"key": 148,
+								"label": "电工机修",
+								"children": [{
+									"value": "199",
+									"key": 199,
+									"label": "常白班",
+									"searchTag": "企管部/动力/电工机修/常白班",
+									"uuid": "",
+									"userDept": 150307
+								}, {
+									"value": "200",
+									"key": 200,
+									"label": "白班",
+									"searchTag": "企管部/动力/电工机修/白班",
+									"uuid": "",
+									"userDept": 150308
+								}, {
+									"value": "201",
+									"key": 201,
+									"label": "晚班",
+									"searchTag": "企管部/动力/电工机修/晚班",
+									"uuid": "",
+									"userDept": 150309
+								}, {
+									"value": "273",
+									"key": 273,
+									"label": "行政班",
+									"searchTag": "企管部/动力/电工机修/行政班",
+									"uuid": "",
+									"userDept": 150317
+								}],
+								"searchTag": "企管部/动力/电工机修",
+								"uuid": "",
+								"userDept": 150256
+							}],
+							"searchTag": "企管部/动力",
+							"uuid": "",
+							"userDept": 150255
+						}],
+						"searchTag": "企管部",
+						"uuid": "",
+						"userDept": 12
+					}, {
+						"value": "14",
+						"key": 14,
+						"label": "一车间",
+						"children": [{
+							"value": "32",
+							"key": 32,
+							"label": "白胚",
+							"children": [{
+								"value": "86",
+								"key": 86,
+								"label": "翻布",
+								"searchTag": "一车间/白胚/翻布",
+								"uuid": "",
+								"userDept": 130401
+							}, {
+								"value": "87",
+								"key": 87,
+								"label": "缝头",
+								"children": [{
+									"value": "144",
+									"key": 144,
+									"label": "甲班",
+									"searchTag": "一车间/白胚/缝头/甲班",
+									"uuid": "",
+									"userDept": 150252
+								}, {
+									"value": "145",
+									"key": 145,
+									"label": "乙班",
+									"searchTag": "一车间/白胚/缝头/乙班",
+									"uuid": "",
+									"userDept": 150253
+								}],
+								"searchTag": "一车间/白胚/缝头",
+								"uuid": "",
+								"userDept": 130402
+							}],
+							"searchTag": "一车间/白胚",
+							"uuid": "",
+							"userDept": 1304
+						}, {
+							"value": "34",
+							"key": 34,
+							"label": "成品发货",
+							"searchTag": "一车间/成品发货",
+							"uuid": "",
+							"userDept": 1306
+						}, {
+							"value": "36",
+							"key": 36,
+							"label": "平缸",
+							"children": [{
+								"value": "137",
+								"key": 137,
+								"label": "甲班",
+								"searchTag": "一车间/平缸/甲班",
+								"uuid": "",
+								"userDept": 150245
+							}, {
+								"value": "138",
+								"key": 138,
+								"label": "乙班",
+								"searchTag": "一车间/平缸/乙班",
+								"uuid": "",
+								"userDept": 150246
+							}],
+							"searchTag": "一车间/平缸",
+							"uuid": "",
+							"userDept": 1308
+						}, {
+							"value": "37",
+							"key": 37,
+							"label": "砂洗",
+							"children": [{
+								"value": "89",
+								"key": 89,
+								"label": "甲班",
+								"searchTag": "一车间/砂洗/甲班",
+								"uuid": "",
+								"userDept": 130901
+							}, {
+								"value": "90",
+								"key": 90,
+								"label": "乙班",
+								"searchTag": "一车间/砂洗/乙班",
+								"uuid": "",
+								"userDept": 130902
+							}],
+							"searchTag": "一车间/砂洗",
+							"uuid": "",
+							"userDept": 1309
+						}, {
+							"value": "38",
+							"key": 38,
+							"label": "脱水",
+							"children": [{
+								"value": "91",
+								"key": 91,
+								"label": "甲班",
+								"searchTag": "一车间/脱水/甲班",
+								"uuid": "",
+								"userDept": 131001
+							}, {
+								"value": "92",
+								"key": 92,
+								"label": "乙班",
+								"searchTag": "一车间/脱水/乙班",
+								"uuid": "",
+								"userDept": 131002
+							}],
+							"searchTag": "一车间/脱水",
+							"uuid": "",
+							"userDept": 1310
+						}, {
+							"value": "39",
+							"key": 39,
+							"label": "烘箱",
+							"children": [{
+								"value": "93",
+								"key": 93,
+								"label": "甲班",
+								"searchTag": "一车间/烘箱/甲班",
+								"uuid": "",
+								"userDept": 131101
+							}, {
+								"value": "94",
+								"key": 94,
+								"label": "乙班",
+								"searchTag": "一车间/烘箱/乙班",
+								"uuid": "",
+								"userDept": 131102
+							}],
+							"searchTag": "一车间/烘箱",
+							"uuid": "",
+							"userDept": 1311
+						}, {
+							"value": "40",
+							"key": 40,
+							"label": "定型",
+							"children": [{
+								"value": "95",
+								"key": 95,
+								"label": "甲班",
+								"searchTag": "一车间/定型/甲班",
+								"uuid": "",
+								"userDept": 131201
+							}, {
+								"value": "96",
+								"key": 96,
+								"label": "乙班",
+								"searchTag": "一车间/定型/乙班",
+								"uuid": "",
+								"userDept": 131202
+							}],
+							"searchTag": "一车间/定型",
+							"uuid": "",
+							"userDept": 1312
+						}, {
+							"value": "41",
+							"key": 41,
+							"label": "质检",
+							"children": [{
+								"value": "97",
+								"key": 97,
+								"label": "甲班",
+								"searchTag": "一车间/质检/甲班",
+								"uuid": "",
+								"userDept": 131301
+							}, {
+								"value": "98",
+								"key": 98,
+								"label": "乙班",
+								"searchTag": "一车间/质检/乙班",
+								"uuid": "",
+								"userDept": 131302
+							}, {
+								"value": "132",
+								"key": 132,
+								"label": "常白班",
+								"searchTag": "一车间/质检/常白班",
+								"uuid": "",
+								"userDept": 150240
+							}],
+							"searchTag": "一车间/质检",
+							"uuid": "",
+							"userDept": 1313
+						}, {
+							"value": "42",
+							"key": 42,
+							"label": "打样",
+							"searchTag": "一车间/打样",
+							"uuid": "",
+							"userDept": 1314
+						}, {
+							"value": "44",
+							"key": 44,
+							"label": "烧毛",
+							"children": [{
+								"value": "133",
+								"key": 133,
+								"label": "甲班",
+								"searchTag": "一车间/烧毛/甲班",
+								"uuid": "",
+								"userDept": 150241
+							}, {
+								"value": "134",
+								"key": 134,
+								"label": "乙班",
+								"searchTag": "一车间/烧毛/乙班",
+								"uuid": "",
+								"userDept": 150242
+							}],
+							"searchTag": "一车间/烧毛",
+							"uuid": "",
+							"userDept": 1316
+						}, {
+							"value": "141",
+							"key": 141,
+							"label": "称料",
+							"children": [{
+								"value": "142",
+								"key": 142,
+								"label": "甲班",
+								"searchTag": "一车间/称料/甲班",
+								"uuid": "",
+								"userDept": 150250
+							}, {
+								"value": "143",
+								"key": 143,
+								"label": "乙班",
+								"searchTag": "一车间/称料/乙班",
+								"uuid": "",
+								"userDept": 150251
+							}, {
+								"value": "269",
+								"key": 269,
+								"label": "常白班",
+								"searchTag": "一车间/称料/常白班",
+								"uuid": "",
+								"userDept": 150377
+							}],
+							"searchTag": "一车间/称料",
+							"uuid": "",
+							"userDept": 150249
+						}, {
+							"value": "186",
+							"key": 186,
+							"label": "对样",
+							"children": [{
+								"value": "187",
+								"key": 187,
+								"label": "甲班",
+								"searchTag": "一车间/对样/甲班",
+								"uuid": "",
+								"userDept": 150295
+							}, {
+								"value": "188",
+								"key": 188,
+								"label": "乙班",
+								"searchTag": "一车间/对样/乙班",
+								"uuid": "",
+								"userDept": 150296
+							}],
+							"searchTag": "一车间/对样",
+							"uuid": "",
+							"userDept": 150294
+						}, {
+							"value": "189",
+							"key": 189,
+							"label": "机缸",
+							"children": [{
+								"value": "190",
+								"key": 190,
+								"label": "甲班",
+								"searchTag": "一车间/机缸/甲班",
+								"uuid": "",
+								"userDept": 150298
+							}, {
+								"value": "191",
+								"key": 191,
+								"label": "乙班",
+								"searchTag": "一车间/机缸/乙班",
+								"uuid": "",
+								"userDept": 150299
+							}],
+							"searchTag": "一车间/机缸",
+							"uuid": "",
+							"userDept": 150297
+						}, {
+							"value": "205",
+							"key": 205,
+							"label": "试样缸",
+							"searchTag": "一车间/试样缸",
+							"uuid": "",
+							"userDept": 150313
+						}, {
+							"value": "206",
+							"key": 206,
+							"label": "气流缸",
+							"children": [{
+								"value": "207",
+								"key": 207,
+								"label": "甲班",
+								"searchTag": "一车间/气流缸/甲班",
+								"uuid": "",
+								"userDept": 150315
+							}, {
+								"value": "208",
+								"key": 208,
+								"label": "乙班",
+								"searchTag": "一车间/气流缸/乙班",
+								"uuid": "",
+								"userDept": 150316
+							}],
+							"searchTag": "一车间/气流缸",
+							"uuid": "",
+							"userDept": 150314
+						}, {
+							"value": "29",
+							"key": 29,
+							"label": "厂部",
+							"searchTag": "一车间/厂部",
+							"uuid": "",
+							"userDept": 1301
+						}, {
+							"value": "281",
+							"key": 281,
+							"label": "技术",
+							"searchTag": "一车间/技术",
+							"uuid": "",
+							"userDept": 150319
+						}, {
+							"value": "31",
+							"key": 31,
+							"label": "主管",
+							"searchTag": "一车间/主管",
+							"uuid": "",
+							"userDept": 1303
+						}],
+						"searchTag": "一车间",
+						"uuid": "",
+						"userDept": 13
+					}, {
+						"value": "15",
+						"key": 15,
+						"label": "二车间",
+						"children": [{
+							"value": "48",
+							"key": 48,
+							"label": "厂部",
+							"searchTag": "二车间/厂部",
+							"uuid": "",
+							"userDept": 1401
+						}, {
+							"value": "49",
+							"key": 49,
+							"label": "主管",
+							"searchTag": "二车间/主管",
+							"uuid": "",
+							"userDept": 1402
+						}, {
+							"value": "50",
+							"key": 50,
+							"label": "白坯",
+							"children": [{
+								"value": "129",
+								"key": 129,
+								"label": "翻布",
+								"searchTag": "二车间/白坯/翻布",
+								"uuid": "",
+								"userDept": 150237
+							}, {
+								"value": "130",
+								"key": 130,
+								"label": "缝头",
+								"searchTag": "二车间/白坯/缝头",
+								"uuid": "",
+								"userDept": 150238
+							}, {
+								"value": "131",
+								"key": 131,
+								"label": "常白班",
+								"searchTag": "二车间/白坯/常白班",
+								"uuid": "",
+								"userDept": 150239
+							}],
+							"searchTag": "二车间/白坯",
+							"uuid": "",
+							"userDept": 1403
+						}, {
+							"value": "51",
+							"key": 51,
+							"label": "机印",
+							"children": [{
+								"value": "119",
+								"key": 119,
+								"label": "圆网甲班",
+								"searchTag": "二车间/机印/圆网甲班",
+								"uuid": "",
+								"userDept": 150227
+							}, {
+								"value": "120",
+								"key": 120,
+								"label": "圆网乙班",
+								"searchTag": "二车间/机印/圆网乙班",
+								"uuid": "",
+								"userDept": 150228
+							}, {
+								"value": "121",
+								"key": 121,
+								"label": "平网甲班",
+								"searchTag": "二车间/机印/平网甲班",
+								"uuid": "",
+								"userDept": 150229
+							}, {
+								"value": "122",
+								"key": 122,
+								"label": "平网乙班",
+								"searchTag": "二车间/机印/平网乙班",
+								"uuid": "",
+								"userDept": 150230
+							}],
+							"searchTag": "二车间/机印",
+							"uuid": "",
+							"userDept": 1404
+						}, {
+							"value": "52",
+							"key": 52,
+							"label": "浆房",
+							"children": [{
+								"value": "117",
+								"key": 117,
+								"label": "甲班",
+								"searchTag": "二车间/浆房/甲班",
+								"uuid": "",
+								"userDept": 150225
+							}, {
+								"value": "118",
+								"key": 118,
+								"label": "乙班",
+								"searchTag": "二车间/浆房/乙班",
+								"uuid": "",
+								"userDept": 150226
+							}],
+							"searchTag": "二车间/浆房",
+							"uuid": "",
+							"userDept": 1405
+						}, {
+							"value": "53",
+							"key": 53,
+							"label": "蒸洗",
+							"children": [{
+								"value": "113",
+								"key": 113,
+								"label": "甲班",
+								"searchTag": "二车间/蒸洗/甲班",
+								"uuid": "",
+								"userDept": 150221
+							}, {
+								"value": "114",
+								"key": 114,
+								"label": "乙班",
+								"searchTag": "二车间/蒸洗/乙班",
+								"uuid": "",
+								"userDept": 150222
+							}],
+							"searchTag": "二车间/蒸洗",
+							"uuid": "",
+							"userDept": 1406
+						}, {
+							"value": "54",
+							"key": 54,
+							"label": "质检",
+							"children": [{
+								"value": "105",
+								"key": 105,
+								"label": "甲班",
+								"searchTag": "二车间/质检/甲班",
+								"uuid": "",
+								"userDept": 150213
+							}, {
+								"value": "106",
+								"key": 106,
+								"label": "乙班",
+								"searchTag": "二车间/质检/乙班",
+								"uuid": "",
+								"userDept": 150214
+							}, {
+								"value": "107",
+								"key": 107,
+								"label": "常白班",
+								"searchTag": "二车间/质检/常白班",
+								"uuid": "",
+								"userDept": 150215
+							}, {
+								"value": "435",
+								"key": 435,
+								"label": "物测",
+								"searchTag": "二车间/质检/物测",
+								"uuid": "",
+								"userDept": 150243
+							}],
+							"searchTag": "二车间/质检",
+							"uuid": "",
+							"userDept": 1407
+						}, {
+							"value": "55",
+							"key": 55,
+							"label": "前处理",
+							"children": [{
+								"value": "115",
+								"key": 115,
+								"label": "甲班",
+								"searchTag": "二车间/前处理/甲班",
+								"uuid": "",
+								"userDept": 150223
+							}, {
+								"value": "116",
+								"key": 116,
+								"label": "乙班",
+								"searchTag": "二车间/前处理/乙班",
+								"uuid": "",
+								"userDept": 150224
+							}],
+							"searchTag": "二车间/前处理",
+							"uuid": "",
+							"userDept": 1408
+						}, {
+							"value": "56",
+							"key": 56,
+							"label": "定型",
+							"children": [{
+								"value": "123",
+								"key": 123,
+								"label": "甲班",
+								"searchTag": "二车间/定型/甲班",
+								"uuid": "",
+								"userDept": 150231
+							}, {
+								"value": "124",
+								"key": 124,
+								"label": "乙班",
+								"searchTag": "二车间/定型/乙班",
+								"uuid": "",
+								"userDept": 150232
+							}],
+							"searchTag": "二车间/定型",
+							"uuid": "",
+							"userDept": 1409
+						}, {
+							"value": "57",
+							"key": 57,
+							"label": "制网",
+							"children": [{
+								"value": "108",
+								"key": 108,
+								"label": "平制甲班",
+								"searchTag": "二车间/制网/平制甲班",
+								"uuid": "",
+								"userDept": 150216
+							}, {
+								"value": "109",
+								"key": 109,
+								"label": "平制乙班",
+								"searchTag": "二车间/制网/平制乙班",
+								"uuid": "",
+								"userDept": 150217
+							}, {
+								"value": "110",
+								"key": 110,
+								"label": "圆制甲班",
+								"searchTag": "二车间/制网/圆制甲班",
+								"uuid": "",
+								"userDept": 150218
+							}, {
+								"value": "111",
+								"key": 111,
+								"label": "圆制乙班",
+								"searchTag": "二车间/制网/圆制乙班",
+								"uuid": "",
+								"userDept": 150219
+							}, {
+								"value": "112",
+								"key": 112,
+								"label": "常白班",
+								"searchTag": "二车间/制网/常白班",
+								"uuid": "",
+								"userDept": 150220
+							}],
+							"searchTag": "二车间/制网",
+							"uuid": "",
+							"userDept": 1410
+						}, {
+							"value": "58",
+							"key": 58,
+							"label": "打样",
+							"children": [{
+								"value": "125",
+								"key": 125,
+								"label": "甲班",
+								"searchTag": "二车间/打样/甲班",
+								"uuid": "",
+								"userDept": 150233
+							}, {
+								"value": "126",
+								"key": 126,
+								"label": "乙班",
+								"searchTag": "二车间/打样/乙班",
+								"uuid": "",
+								"userDept": 150234
+							}, {
+								"value": "127",
+								"key": 127,
+								"label": "常白班",
+								"searchTag": "二车间/打样/常白班",
+								"uuid": "",
+								"userDept": 150235
+							}, {
+								"value": "128",
+								"key": 128,
+								"label": "刮样",
+								"searchTag": "二车间/打样/刮样",
+								"uuid": "",
+								"userDept": 150236
+							}],
+							"searchTag": "二车间/打样",
+							"uuid": "",
+							"userDept": 1411
+						}, {
+							"value": "59",
+							"key": 59,
+							"label": "描稿",
+							"searchTag": "二车间/描稿",
+							"uuid": "",
+							"userDept": 1412
+						}, {
+							"value": "60",
+							"key": 60,
+							"label": "跟单",
+							"searchTag": "二车间/跟单",
+							"uuid": "",
+							"userDept": 1413
+						}],
+						"searchTag": "二车间",
+						"uuid": "",
+						"userDept": 14
+					}, {
+						"value": "16",
+						"key": 16,
+						"label": "三车间",
+						"children": [{
+							"value": "61",
+							"key": 61,
+							"label": "三车间染色",
+							"children": [{
+								"value": "63",
+								"key": 63,
+								"label": "厂部",
+								"searchTag": "三车间/三车间染色/厂部",
+								"uuid": "",
+								"userDept": 150101
+							}, {
+								"value": "64",
+								"key": 64,
+								"label": "主管",
+								"searchTag": "三车间/三车间染色/主管",
+								"uuid": "",
+								"userDept": 150102
+							}, {
+								"value": "68",
+								"key": 68,
+								"label": "化验室",
+								"children": [{
+									"value": "222",
+									"key": 222,
+									"label": "甲班",
+									"searchTag": "三车间/三车间染色/化验室/甲班",
+									"uuid": "",
+									"userDept": 150330
+								}, {
+									"value": "223",
+									"key": 223,
+									"label": "乙班",
+									"searchTag": "三车间/三车间染色/化验室/乙班",
+									"uuid": "",
+									"userDept": 150331
+								}, {
+									"value": "224",
+									"key": 224,
+									"label": "常白班",
+									"searchTag": "三车间/三车间染色/化验室/常白班",
+									"uuid": "",
+									"userDept": 150332
+								}],
+								"searchTag": "三车间/三车间染色/化验室",
+								"uuid": "",
+								"userDept": 150106
+							}, {
+								"value": "70",
+								"key": 70,
+								"label": "定型",
+								"children": [{
+									"value": "277",
+									"key": 277,
+									"label": "甲班",
+									"searchTag": "三车间/三车间染色/定型/甲班",
+									"uuid": "",
+									"userDept": 15010801
+								}, {
+									"value": "278",
+									"key": 278,
+									"label": "乙班",
+									"searchTag": "三车间/三车间染色/定型/乙班",
+									"uuid": "",
+									"userDept": 15010802
+								}, {
+									"value": "279",
+									"key": 279,
+									"label": "常白班",
+									"searchTag": "三车间/三车间染色/定型/常白班",
+									"uuid": "",
+									"userDept": 15010803
+								}],
+								"searchTag": "三车间/三车间染色/定型",
+								"uuid": "",
+								"userDept": 150108
+							}, {
+								"value": "71",
+								"key": 71,
+								"label": "质检",
+								"children": [{
+									"value": "150",
+									"key": 150,
+									"label": "甲班",
+									"searchTag": "三车间/三车间染色/质检/甲班",
+									"uuid": "",
+									"userDept": 150258
+								}, {
+									"value": "151",
+									"key": 151,
+									"label": "常白班",
+									"searchTag": "三车间/三车间染色/质检/常白班",
+									"uuid": "",
+									"userDept": 150259
+								}, {
+									"value": "225",
+									"key": 225,
+									"label": "乙班",
+									"searchTag": "三车间/三车间染色/质检/乙班",
+									"uuid": "",
+									"userDept": 150333
+								}],
+								"searchTag": "三车间/三车间染色/质检",
+								"uuid": "",
+								"userDept": 150109
+							}, {
+								"value": "149",
+								"key": 149,
+								"label": "计划部",
+								"children": [{
+									"value": "252",
+									"key": 252,
+									"label": "翻布",
+									"searchTag": "三车间/三车间染色/计划部/翻布",
+									"uuid": "",
+									"userDept": 150360
+								}, {
+									"value": "253",
+									"key": 253,
+									"label": "缝头",
+									"searchTag": "三车间/三车间染色/计划部/缝头",
+									"uuid": "",
+									"userDept": 150361
+								}, {
+									"value": "254",
+									"key": 254,
+									"label": "汽平",
+									"searchTag": "三车间/三车间染色/计划部/汽平",
+									"uuid": "",
+									"userDept": 150362
+								}],
+								"searchTag": "三车间/三车间染色/计划部",
+								"uuid": "",
+								"userDept": 150257
+							}, {
+								"value": "158",
+								"key": 158,
+								"label": "仓库",
+								"searchTag": "三车间/三车间染色/仓库",
+								"uuid": "",
+								"userDept": 150266
+							}, {
+								"value": "245",
+								"key": 245,
+								"label": "染部",
+								"children": [{
+									"value": "246",
+									"key": 246,
+									"label": "称料",
+									"searchTag": "三车间/三车间染色/染部/称料",
+									"uuid": "",
+									"userDept": 150354
+								}, {
+									"value": "249",
+									"key": 249,
+									"label": "机缸",
+									"children": [{
+										"value": "255",
+										"key": 255,
+										"label": "甲班",
+										"searchTag": "三车间/三车间染色/染部/机缸/甲班",
+										"uuid": "",
+										"userDept": 150363
+									}, {
+										"value": "256",
+										"key": 256,
+										"label": "乙班",
+										"searchTag": "三车间/三车间染色/染部/机缸/乙班",
+										"uuid": "",
+										"userDept": 150364
+									}, {
+										"value": "257",
+										"key": 257,
+										"label": "常白班",
+										"searchTag": "三车间/三车间染色/染部/机缸/常白班",
+										"uuid": "",
+										"userDept": 150365
+									}],
+									"searchTag": "三车间/三车间染色/染部/机缸",
+									"uuid": "",
+									"userDept": 150357
+								}, {
+									"value": "250",
+									"key": 250,
+									"label": "开幅",
+									"searchTag": "三车间/三车间染色/染部/开幅",
+									"uuid": "",
+									"userDept": 150358
+								}, {
+									"value": "251",
+									"key": 251,
+									"label": "脱水",
+									"searchTag": "三车间/三车间染色/染部/脱水",
+									"uuid": "",
+									"userDept": 150359
+								}],
+								"searchTag": "三车间/三车间染色/染部",
+								"uuid": "",
+								"userDept": 150353
+							}],
+							"searchTag": "三车间/三车间染色",
+							"uuid": "",
+							"userDept": 1501
+						}, {
+							"value": "62",
+							"key": 62,
+							"label": "三车间印花",
+							"children": [{
+								"value": "75",
+								"key": 75,
+								"label": "厂部",
+								"searchTag": "三车间/三车间印花/厂部",
+								"uuid": "",
+								"userDept": 150201
+							}, {
+								"value": "76",
+								"key": 76,
+								"label": "主管",
+								"searchTag": "三车间/三车间印花/主管",
+								"uuid": "",
+								"userDept": 150202
+							}, {
+								"value": "77",
+								"key": 77,
+								"label": "机印",
+								"children": [{
+									"value": "258",
+									"key": 258,
+									"label": "圆网",
+									"children": [{
+										"value": "260",
+										"key": 260,
+										"label": "甲班",
+										"searchTag": "三车间/三车间印花/机印/圆网/甲班",
+										"uuid": "",
+										"userDept": 150368
+									}, {
+										"value": "261",
+										"key": 261,
+										"label": "乙班",
+										"searchTag": "三车间/三车间印花/机印/圆网/乙班",
+										"uuid": "",
+										"userDept": 150369
+									}, {
+										"value": "283",
+										"key": 283,
+										"label": "常白班",
+										"searchTag": "三车间/三车间印花/机印/圆网/常白班",
+										"uuid": "",
+										"userDept": 150373
+									}],
+									"searchTag": "三车间/三车间印花/机印/圆网",
+									"uuid": "",
+									"userDept": 150366
+								}, {
+									"value": "259",
+									"key": 259,
+									"label": "平网",
+									"children": [{
+										"value": "262",
+										"key": 262,
+										"label": "甲班",
+										"searchTag": "三车间/三车间印花/机印/平网/甲班",
+										"uuid": "",
+										"userDept": 150370
+									}, {
+										"value": "263",
+										"key": 263,
+										"label": "乙班",
+										"searchTag": "三车间/三车间印花/机印/平网/乙班",
+										"uuid": "",
+										"userDept": 150371
+									}, {
+										"value": "264",
+										"key": 264,
+										"label": "常白班",
+										"searchTag": "三车间/三车间印花/机印/平网/常白班",
+										"uuid": "",
+										"userDept": 150372
+									}],
+									"searchTag": "三车间/三车间印花/机印/平网",
+									"uuid": "",
+									"userDept": 150367
+								}, {
+									"value": "284",
+									"key": 284,
+									"label": "机印",
+									"children": [{
+										"value": "285",
+										"key": 285,
+										"label": "甲班",
+										"searchTag": "三车间/三车间印花/机印/机印/甲班",
+										"uuid": "",
+										"userDept": 15037401
+									}, {
+										"value": "286",
+										"key": 286,
+										"label": "乙班",
+										"searchTag": "三车间/三车间印花/机印/机印/乙班",
+										"uuid": "",
+										"userDept": 15037402
+									}, {
+										"value": "287",
+										"key": 287,
+										"label": "常白班",
+										"searchTag": "三车间/三车间印花/机印/机印/常白班",
+										"uuid": "",
+										"userDept": 15037403
+									}],
+									"searchTag": "三车间/三车间印花/机印/机印",
+									"uuid": "",
+									"userDept": 150374
+								}],
+								"searchTag": "三车间/三车间印花/机印",
+								"uuid": "",
+								"userDept": 150203
+							}, {
+								"value": "78",
+								"key": 78,
+								"label": "浆房",
+								"children": [{
+									"value": "168",
+									"key": 168,
+									"label": "甲班",
+									"searchTag": "三车间/三车间印花/浆房/甲班",
+									"uuid": "",
+									"userDept": 150276
+								}, {
+									"value": "169",
+									"key": 169,
+									"label": "乙班",
+									"searchTag": "三车间/三车间印花/浆房/乙班",
+									"uuid": "",
+									"userDept": 150277
+								}, {
+									"value": "170",
+									"key": 170,
+									"label": "常白班",
+									"searchTag": "三车间/三车间印花/浆房/常白班",
+									"uuid": "",
+									"userDept": 150278
+								}],
+								"searchTag": "三车间/三车间印花/浆房",
+								"uuid": "",
+								"userDept": 150204
+							}, {
+								"value": "79",
+								"key": 79,
+								"label": "蒸洗",
+								"children": [{
+									"value": "178",
+									"key": 178,
+									"label": "甲班",
+									"searchTag": "三车间/三车间印花/蒸洗/甲班",
+									"uuid": "",
+									"userDept": 150286
+								}, {
+									"value": "179",
+									"key": 179,
+									"label": "乙班",
+									"searchTag": "三车间/三车间印花/蒸洗/乙班",
+									"uuid": "",
+									"userDept": 150287
+								}, {
+									"value": "180",
+									"key": 180,
+									"label": "常白班",
+									"searchTag": "三车间/三车间印花/蒸洗/常白班",
+									"uuid": "",
+									"userDept": 150288
+								}],
+								"searchTag": "三车间/三车间印花/蒸洗",
+								"uuid": "",
+								"userDept": 150205
+							}, {
+								"value": "80",
+								"key": 80,
+								"label": "质检",
+								"children": [{
+									"value": "274",
+									"key": 274,
+									"label": "甲班",
+									"searchTag": "三车间/三车间印花/质检/甲班",
+									"uuid": "",
+									"userDept": 15020601
+								}, {
+									"value": "275",
+									"key": 275,
+									"label": "乙班",
+									"searchTag": "三车间/三车间印花/质检/乙班",
+									"uuid": "",
+									"userDept": 15020602
+								}, {
+									"value": "276",
+									"key": 276,
+									"label": "常白班",
+									"searchTag": "三车间/三车间印花/质检/常白班",
+									"uuid": "",
+									"userDept": 15020603
+								}],
+								"searchTag": "三车间/三车间印花/质检",
+								"uuid": "",
+								"userDept": 150206
+							}, {
+								"value": "81",
+								"key": 81,
+								"label": "定型",
+								"children": [{
+									"value": "161",
+									"key": 161,
+									"label": "甲班",
+									"searchTag": "三车间/三车间印花/定型/甲班",
+									"uuid": "",
+									"userDept": 150269
+								}, {
+									"value": "162",
+									"key": 162,
+									"label": "乙班",
+									"searchTag": "三车间/三车间印花/定型/乙班",
+									"uuid": "",
+									"userDept": 150270
+								}, {
+									"value": "163",
+									"key": 163,
+									"label": "常白班",
+									"searchTag": "三车间/三车间印花/定型/常白班",
+									"uuid": "",
+									"userDept": 150271
+								}],
+								"searchTag": "三车间/三车间印花/定型",
+								"uuid": "",
+								"userDept": 150207
+							}, {
+								"value": "82",
+								"key": 82,
+								"label": "制网",
+								"children": [{
+									"value": "172",
+									"key": 172,
+									"label": "甲班",
+									"searchTag": "三车间/三车间印花/制网/甲班",
+									"uuid": "",
+									"userDept": 150280
+								}, {
+									"value": "173",
+									"key": 173,
+									"label": "乙班",
+									"searchTag": "三车间/三车间印花/制网/乙班",
+									"uuid": "",
+									"userDept": 150281
+								}, {
+									"value": "177",
+									"key": 177,
+									"label": "常白班",
+									"searchTag": "三车间/三车间印花/制网/常白班",
+									"uuid": "",
+									"userDept": 150285
+								}],
+								"searchTag": "三车间/三车间印花/制网",
+								"uuid": "",
+								"userDept": 150208
+							}, {
+								"value": "84",
+								"key": 84,
+								"label": "打样",
+								"children": [{
+									"value": "268",
+									"key": 268,
+									"label": "刮样",
+									"searchTag": "三车间/三车间印花/打样/刮样",
+									"uuid": "",
+									"userDept": 150376
+								}],
+								"searchTag": "三车间/三车间印花/打样",
+								"uuid": "",
+								"userDept": 150210
+							}, {
+								"value": "85",
+								"key": 85,
+								"label": "描稿",
+								"searchTag": "三车间/三车间印花/描稿",
+								"uuid": "",
+								"userDept": 150211
+							}, {
+								"value": "160",
+								"key": 160,
+								"label": "仓库",
+								"searchTag": "三车间/三车间印花/仓库",
+								"uuid": "",
+								"userDept": 150268
+							}, {
+								"value": "198",
+								"key": 198,
+								"label": "前处理",
+								"children": [{
+									"value": "288",
+									"key": 288,
+									"label": "仓库",
+									"searchTag": "三车间/三车间印花/前处理/仓库",
+									"uuid": "",
+									"userDept": 15030601
+								}, {
+									"value": "289",
+									"key": 289,
+									"label": "常白班",
+									"searchTag": "三车间/三车间印花/前处理/常白班",
+									"uuid": "",
+									"userDept": 15030602
+								}, {
+									"value": "290",
+									"key": 290,
+									"label": "甲班",
+									"searchTag": "三车间/三车间印花/前处理/甲班",
+									"uuid": "",
+									"userDept": 15030603
+								}, {
+									"value": "291",
+									"key": 291,
+									"label": "乙班",
+									"searchTag": "三车间/三车间印花/前处理/乙班",
+									"uuid": "",
+									"userDept": 15030604
+								}],
+								"searchTag": "三车间/三车间印花/前处理",
+								"uuid": "",
+								"userDept": 150306
+							}, {
+								"value": "210",
+								"key": 210,
+								"label": "机缸",
+								"children": [{
+									"value": "212",
+									"key": 212,
+									"label": "甲班",
+									"searchTag": "三车间/三车间印花/机缸/甲班",
+									"uuid": "",
+									"userDept": 150320
+								}, {
+									"value": "213",
+									"key": 213,
+									"label": "乙班",
+									"searchTag": "三车间/三车间印花/机缸/乙班",
+									"uuid": "",
+									"userDept": 150321
+								}, {
+									"value": "214",
+									"key": 214,
+									"label": "常白班",
+									"searchTag": "三车间/三车间印花/机缸/常白班",
+									"uuid": "",
+									"userDept": 150322
+								}],
+								"searchTag": "三车间/三车间印花/机缸",
+								"uuid": "",
+								"userDept": 150318
+							}, {
+								"value": "436",
+								"key": 436,
+								"label": "跟单",
+								"searchTag": "三车间/三车间印花/跟单",
+								"uuid": "",
+								"userDept": 150323
+							}],
+							"searchTag": "三车间/三车间印花",
+							"uuid": "",
+							"userDept": 1502
+						}],
+						"searchTag": "三车间",
+						"uuid": "",
+						"userDept": 15
+					}, {
+						"value": "13",
+						"key": 13,
+						"label": "采购",
+						"searchTag": "采购",
+						"uuid": "",
+						"userDept": 16
+					}, {
+						"value": "336",
+						"key": 336,
+						"label": "一车间染色",
+						"children": [{
+							"value": "340",
+							"key": 340,
+							"label": "总部",
+							"children": [{
+								"value": "348",
+								"key": 348,
+								"label": "厂部",
+								"children": [{
+									"value": "386",
+									"key": 386,
+									"label": "生产调度",
+									"searchTag": "一车间染色/总部/厂部/生产调度",
+									"uuid": "",
+									"userDept": 21010101
+								}, {
+									"value": "387",
+									"key": 387,
+									"label": "技术",
+									"searchTag": "一车间染色/总部/厂部/技术",
+									"uuid": "",
+									"userDept": 21010102
+								}],
+								"searchTag": "一车间染色/总部/厂部",
+								"uuid": "",
+								"userDept": 210101
+							}, {
+								"value": "349",
+								"key": 349,
+								"label": "主管",
+								"searchTag": "一车间染色/总部/主管",
+								"uuid": "",
+								"userDept": 210102
+							}],
+							"searchTag": "一车间染色/总部",
+							"uuid": "",
+							"userDept": 2101
+						}, {
+							"value": "341",
+							"key": 341,
+							"label": "车间",
+							"children": [{
+								"value": "350",
+								"key": 350,
+								"label": "白坯",
+								"children": [{
+									"value": "388",
+									"key": 388,
+									"label": "翻布",
+									"searchTag": "一车间染色/车间/白坯/翻布",
+									"uuid": "",
+									"userDept": 21020101
+								}, {
+									"value": "389",
+									"key": 389,
+									"label": "缝头",
+									"searchTag": "一车间染色/车间/白坯/缝头",
+									"uuid": "",
+									"userDept": 21020102
+								}, {
+									"value": "390",
+									"key": 390,
+									"label": "砂洗",
+									"searchTag": "一车间染色/车间/白坯/砂洗",
+									"uuid": "",
+									"userDept": 21020103
+								}],
+								"searchTag": "一车间染色/车间/白坯",
+								"uuid": "",
+								"userDept": 210201
+							}, {
+								"value": "351",
+								"key": 351,
+								"label": "前处理",
+								"children": [{
+									"value": "391",
+									"key": 391,
+									"label": "机缸",
+									"searchTag": "一车间染色/车间/前处理/机缸",
+									"uuid": "",
+									"userDept": 21020201
+								}, {
+									"value": "392",
+									"key": 392,
+									"label": "试样缸",
+									"searchTag": "一车间染色/车间/前处理/试样缸",
+									"uuid": "",
+									"userDept": 21020202
+								}, {
+									"value": "393",
+									"key": 393,
+									"label": "气流缸",
+									"searchTag": "一车间染色/车间/前处理/气流缸",
+									"uuid": "",
+									"userDept": 21020203
+								}, {
+									"value": "394",
+									"key": 394,
+									"label": "平缸",
+									"searchTag": "一车间染色/车间/前处理/平缸",
+									"uuid": "",
+									"userDept": 21020204
+								}, {
+									"value": "395",
+									"key": 395,
+									"label": "脱水",
+									"searchTag": "一车间染色/车间/前处理/脱水",
+									"uuid": "",
+									"userDept": 21020205
+								}, {
+									"value": "396",
+									"key": 396,
+									"label": "烧毛",
+									"searchTag": "一车间染色/车间/前处理/烧毛",
+									"uuid": "",
+									"userDept": 21020206
+								}, {
+									"value": "397",
+									"key": 397,
+									"label": "称料",
+									"searchTag": "一车间染色/车间/前处理/称料",
+									"uuid": "",
+									"userDept": 21020207
+								}, {
+									"value": "398",
+									"key": 398,
+									"label": "对样",
+									"searchTag": "一车间染色/车间/前处理/对样",
+									"uuid": "",
+									"userDept": 21020208
+								}],
+								"searchTag": "一车间染色/车间/前处理",
+								"uuid": "",
+								"userDept": 210202
+							}, {
+								"value": "352",
+								"key": 352,
+								"label": "烘箱",
+								"searchTag": "一车间染色/车间/烘箱",
+								"uuid": "",
+								"userDept": 210203
+							}, {
+								"value": "353",
+								"key": 353,
+								"label": "定型",
+								"searchTag": "一车间染色/车间/定型",
+								"uuid": "",
+								"userDept": 210204
+							}, {
+								"value": "354",
+								"key": 354,
+								"label": "打样",
+								"searchTag": "一车间染色/车间/打样",
+								"uuid": "",
+								"userDept": 210205
+							}, {
+								"value": "355",
+								"key": 355,
+								"label": "质检打卷",
+								"children": [{
+									"value": "399",
+									"key": 399,
+									"label": "质检",
+									"searchTag": "一车间染色/车间/质检打卷/质检",
+									"uuid": "",
+									"userDept": 21020601
+								}, {
+									"value": "400",
+									"key": 400,
+									"label": "打卷",
+									"searchTag": "一车间染色/车间/质检打卷/打卷",
+									"uuid": "",
+									"userDept": 21020602
+								}],
+								"searchTag": "一车间染色/车间/质检打卷",
+								"uuid": "",
+								"userDept": 210206
+							}],
+							"searchTag": "一车间染色/车间",
+							"uuid": "",
+							"userDept": 2102
+						}],
+						"searchTag": "一车间染色",
+						"uuid": "",
+						"userDept": 21
+					}, {
+						"value": "337",
+						"key": 337,
+						"label": "二车间印花",
+						"children": [{
+							"value": "342",
+							"key": 342,
+							"label": "总部",
+							"children": [{
+								"value": "356",
+								"key": 356,
+								"label": "厂部",
+								"children": [{
+									"value": "403",
+									"key": 403,
+									"label": "生产调度",
+									"searchTag": "二车间印花/总部/厂部/生产调度",
+									"uuid": "",
+									"userDept": 22010101
+								}, {
+									"value": "404",
+									"key": 404,
+									"label": "描稿",
+									"searchTag": "二车间印花/总部/厂部/描稿",
+									"uuid": "",
+									"userDept": 22010102
+								}, {
+									"value": "405",
+									"key": 405,
+									"label": "跟单",
+									"searchTag": "二车间印花/总部/厂部/跟单",
+									"uuid": "",
+									"userDept": 22010103
+								}],
+								"searchTag": "二车间印花/总部/厂部",
+								"uuid": "",
+								"userDept": 220101
+							}, {
+								"value": "357",
+								"key": 357,
+								"label": "主管",
+								"searchTag": "二车间印花/总部/主管",
+								"uuid": "",
+								"userDept": 220102
+							}],
+							"searchTag": "二车间印花/总部",
+							"uuid": "",
+							"userDept": 2201
+						}, {
+							"value": "343",
+							"key": 343,
+							"label": "车间",
+							"children": [{
+								"value": "358",
+								"key": 358,
+								"label": "白坯翻布",
+								"children": [{
+									"value": "406",
+									"key": 406,
+									"label": "翻布",
+									"searchTag": "二车间印花/车间/白坯翻布/翻布",
+									"uuid": "",
+									"userDept": 22020101
+								}, {
+									"value": "407",
+									"key": 407,
+									"label": "缝头",
+									"searchTag": "二车间印花/车间/白坯翻布/缝头",
+									"uuid": "",
+									"userDept": 22020102
+								}],
+								"searchTag": "二车间印花/车间/白坯翻布",
+								"uuid": "",
+								"userDept": 220201
+							}, {
+								"value": "359",
+								"key": 359,
+								"label": "前处理",
+								"searchTag": "二车间印花/车间/前处理",
+								"uuid": "",
+								"userDept": 220202
+							}, {
+								"value": "360",
+								"key": 360,
+								"label": "浆房",
+								"searchTag": "二车间印花/车间/浆房",
+								"uuid": "",
+								"userDept": 220203
+							}, {
+								"value": "361",
+								"key": 361,
+								"label": "机印",
+								"children": [{
+									"value": "408",
+									"key": 408,
+									"label": "圆网",
+									"searchTag": "二车间印花/车间/机印/圆网",
+									"uuid": "",
+									"userDept": 22020401
+								}, {
+									"value": "409",
+									"key": 409,
+									"label": "平网",
+									"searchTag": "二车间印花/车间/机印/平网",
+									"uuid": "",
+									"userDept": 22020402
+								}],
+								"searchTag": "二车间印花/车间/机印",
+								"uuid": "",
+								"userDept": 220204
+							}, {
+								"value": "362",
+								"key": 362,
+								"label": "蒸洗",
+								"children": [{
+									"value": "410",
+									"key": 410,
+									"label": "水洗",
+									"searchTag": "二车间印花/车间/蒸洗/水洗",
+									"uuid": "",
+									"userDept": 22020501
+								}, {
+									"value": "411",
+									"key": 411,
+									"label": "蒸化",
+									"searchTag": "二车间印花/车间/蒸洗/蒸化",
+									"uuid": "",
+									"userDept": 22020502
+								}],
+								"searchTag": "二车间印花/车间/蒸洗",
+								"uuid": "",
+								"userDept": 220205
+							}, {
+								"value": "363",
+								"key": 363,
+								"label": "制网",
+								"children": [{
+									"value": "412",
+									"key": 412,
+									"label": "圆网",
+									"searchTag": "二车间印花/车间/制网/圆网",
+									"uuid": "",
+									"userDept": 22020601
+								}, {
+									"value": "413",
+									"key": 413,
+									"label": "平网",
+									"searchTag": "二车间印花/车间/制网/平网",
+									"uuid": "",
+									"userDept": 22020602
+								}],
+								"searchTag": "二车间印花/车间/制网",
+								"uuid": "",
+								"userDept": 220206
+							}, {
+								"value": "364",
+								"key": 364,
+								"label": "定型",
+								"children": [{
+									"value": "414",
+									"key": 414,
+									"label": "进布",
+									"searchTag": "二车间印花/车间/定型/进布",
+									"uuid": "",
+									"userDept": 22020701
+								}, {
+									"value": "415",
+									"key": 415,
+									"label": "落布",
+									"searchTag": "二车间印花/车间/定型/落布",
+									"uuid": "",
+									"userDept": 22020702
+								}, {
+									"value": "416",
+									"key": 416,
+									"label": "把边",
+									"searchTag": "二车间印花/车间/定型/把边",
+									"uuid": "",
+									"userDept": 22020703
+								}],
+								"searchTag": "二车间印花/车间/定型",
+								"uuid": "",
+								"userDept": 220207
+							}, {
+								"value": "365",
+								"key": 365,
+								"label": "打样",
+								"children": [{
+									"value": "417",
+									"key": 417,
+									"label": "打样",
+									"searchTag": "二车间印花/车间/打样/打样",
+									"uuid": "",
+									"userDept": 22020801
+								}, {
+									"value": "418",
+									"key": 418,
+									"label": "刮样",
+									"searchTag": "二车间印花/车间/打样/刮样",
+									"uuid": "",
+									"userDept": 22020802
+								}],
+								"searchTag": "二车间印花/车间/打样",
+								"uuid": "",
+								"userDept": 220208
+							}, {
+								"value": "366",
+								"key": 366,
+								"label": "质检打卷",
+								"children": [{
+									"value": "401",
+									"key": 401,
+									"label": "质检",
+									"searchTag": "二车间印花/车间/质检打卷/质检",
+									"uuid": "",
+									"userDept": 22020901
+								}, {
+									"value": "402",
+									"key": 402,
+									"label": "打卷",
+									"searchTag": "二车间印花/车间/质检打卷/打卷",
+									"uuid": "",
+									"userDept": 22020902
+								}, {
+									"value": "433",
+									"key": 433,
+									"label": "物测",
+									"searchTag": "二车间印花/车间/质检打卷/物测",
+									"uuid": "",
+									"userDept": 22020903
+								}, {
+									"value": "434",
+									"key": 434,
+									"label": "修花",
+									"searchTag": "二车间印花/车间/质检打卷/修花",
+									"uuid": "",
+									"userDept": 22020904
+								}],
+								"searchTag": "二车间印花/车间/质检打卷",
+								"uuid": "",
+								"userDept": 220209
+							}],
+							"searchTag": "二车间印花/车间",
+							"uuid": "",
+							"userDept": 2202
+						}],
+						"searchTag": "二车间印花",
+						"uuid": "",
+						"userDept": 22
+					}, {
+						"value": "338",
+						"key": 338,
+						"label": "三车间染色",
+						"children": [{
+							"value": "344",
+							"key": 344,
+							"label": "总部",
+							"children": [{
+								"value": "367",
+								"key": 367,
+								"label": "厂部",
+								"searchTag": "三车间染色/总部/厂部",
+								"uuid": "",
+								"userDept": 230101
+							}, {
+								"value": "368",
+								"key": 368,
+								"label": "主管",
+								"searchTag": "三车间染色/总部/主管",
+								"uuid": "",
+								"userDept": 230102
+							}],
+							"searchTag": "三车间染色/总部",
+							"uuid": "",
+							"userDept": 2301
+						}, {
+							"value": "345",
+							"key": 345,
+							"label": "车间",
+							"children": [{
+								"value": "369",
+								"key": 369,
+								"label": "染部",
+								"children": [{
+									"value": "419",
+									"key": 419,
+									"label": "称料",
+									"searchTag": "三车间染色/车间/染部/称料",
+									"uuid": "",
+									"userDept": 23020101
+								}, {
+									"value": "420",
+									"key": 420,
+									"label": "机缸",
+									"searchTag": "三车间染色/车间/染部/机缸",
+									"uuid": "",
+									"userDept": 23020102
+								}, {
+									"value": "421",
+									"key": 421,
+									"label": "开幅",
+									"searchTag": "三车间染色/车间/染部/开幅",
+									"uuid": "",
+									"userDept": 23020103
+								}, {
+									"value": "422",
+									"key": 422,
+									"label": "脱水",
+									"searchTag": "三车间染色/车间/染部/脱水",
+									"uuid": "",
+									"userDept": 23020104
+								}],
+								"searchTag": "三车间染色/车间/染部",
+								"uuid": "",
+								"userDept": 230201
+							}, {
+								"value": "370",
+								"key": 370,
+								"label": "定型",
+								"searchTag": "三车间染色/车间/定型",
+								"uuid": "",
+								"userDept": 230202
+							}, {
+								"value": "371",
+								"key": 371,
+								"label": "计划部",
+								"children": [{
+									"value": "423",
+									"key": 423,
+									"label": "翻布",
+									"searchTag": "三车间染色/车间/计划部/翻布",
+									"uuid": "",
+									"userDept": 23020301
+								}, {
+									"value": "424",
+									"key": 424,
+									"label": "缝头",
+									"searchTag": "三车间染色/车间/计划部/缝头",
+									"uuid": "",
+									"userDept": 23020302
+								}, {
+									"value": "425",
+									"key": 425,
+									"label": "汽平",
+									"searchTag": "三车间染色/车间/计划部/汽平",
+									"uuid": "",
+									"userDept": 23020303
+								}],
+								"searchTag": "三车间染色/车间/计划部",
+								"uuid": "",
+								"userDept": 230203
+							}, {
+								"value": "372",
+								"key": 372,
+								"label": "化验室",
+								"searchTag": "三车间染色/车间/化验室",
+								"uuid": "",
+								"userDept": 230204
+							}, {
+								"value": "373",
+								"key": 373,
+								"label": "质检打卷",
+								"searchTag": "三车间染色/车间/质检打卷",
+								"uuid": "",
+								"userDept": 230205
+							}, {
+								"value": "374",
+								"key": 374,
+								"label": "仓库",
+								"searchTag": "三车间染色/车间/仓库",
+								"uuid": "",
+								"userDept": 230206
+							}],
+							"searchTag": "三车间染色/车间",
+							"uuid": "",
+							"userDept": 2302
+						}],
+						"searchTag": "三车间染色",
+						"uuid": "",
+						"userDept": 23
+					}, {
+						"value": "339",
+						"key": 339,
+						"label": "三车间印花",
+						"children": [{
+							"value": "346",
+							"key": 346,
+							"label": "总部",
+							"children": [{
+								"value": "375",
+								"key": 375,
+								"label": "厂部",
+								"children": [{
+									"value": "426",
+									"key": 426,
+									"label": "生产调度",
+									"searchTag": "三车间印花/总部/厂部/生产调度",
+									"uuid": "",
+									"userDept": 24010101
+								}, {
+									"value": "427",
+									"key": 427,
+									"label": "描稿",
+									"searchTag": "三车间印花/总部/厂部/描稿",
+									"uuid": "",
+									"userDept": 24010102
+								}],
+								"searchTag": "三车间印花/总部/厂部",
+								"uuid": "",
+								"userDept": 240101
+							}, {
+								"value": "376",
+								"key": 376,
+								"label": "主管",
+								"searchTag": "三车间印花/总部/主管",
+								"uuid": "",
+								"userDept": 240102
+							}],
+							"searchTag": "三车间印花/总部",
+							"uuid": "",
+							"userDept": 2401
+						}, {
+							"value": "347",
+							"key": 347,
+							"label": "车间",
+							"children": [{
+								"value": "377",
+								"key": 377,
+								"label": "前处理",
+								"searchTag": "三车间印花/车间/前处理",
+								"uuid": "",
+								"userDept": 240201
+							}, {
+								"value": "378",
+								"key": 378,
+								"label": "浆房",
+								"searchTag": "三车间印花/车间/浆房",
+								"uuid": "",
+								"userDept": 240202
+							}, {
+								"value": "379",
+								"key": 379,
+								"label": "机印",
+								"children": [{
+									"value": "428",
+									"key": 428,
+									"label": "圆网",
+									"searchTag": "三车间印花/车间/机印/圆网",
+									"uuid": "",
+									"userDept": 24020301
+								}, {
+									"value": "429",
+									"key": 429,
+									"label": "平网",
+									"searchTag": "三车间印花/车间/机印/平网",
+									"uuid": "",
+									"userDept": 24020302
+								}, {
+									"value": "430",
+									"key": 430,
+									"label": "机印",
+									"searchTag": "三车间印花/车间/机印/机印",
+									"uuid": "",
+									"userDept": 24020303
+								}],
+								"searchTag": "三车间印花/车间/机印",
+								"uuid": "",
+								"userDept": 240203
+							}, {
+								"value": "380",
+								"key": 380,
+								"label": "蒸洗",
+								"searchTag": "三车间印花/车间/蒸洗",
+								"uuid": "",
+								"userDept": 240204
+							}, {
+								"value": "381",
+								"key": 381,
+								"label": "制网",
+								"searchTag": "三车间印花/车间/制网",
+								"uuid": "",
+								"userDept": 240205
+							}, {
+								"value": "382",
+								"key": 382,
+								"label": "定型",
+								"searchTag": "三车间印花/车间/定型",
+								"uuid": "",
+								"userDept": 240206
+							}, {
+								"value": "383",
+								"key": 383,
+								"label": "质检打卷",
+								"searchTag": "三车间印花/车间/质检打卷",
+								"uuid": "",
+								"userDept": 240207
+							}, {
+								"value": "384",
+								"key": 384,
+								"label": "打样",
+								"children": [{
+									"value": "431",
+									"key": 431,
+									"label": "打样",
+									"searchTag": "三车间印花/车间/打样/打样",
+									"uuid": "",
+									"userDept": 24020801
+								}, {
+									"value": "432",
+									"key": 432,
+									"label": "刮小样",
+									"searchTag": "三车间印花/车间/打样/刮小样",
+									"uuid": "",
+									"userDept": 24020802
+								}],
+								"searchTag": "三车间印花/车间/打样",
+								"uuid": "",
+								"userDept": 240208
+							}, {
+								"value": "385",
+								"key": 385,
+								"label": "仓库",
+								"searchTag": "三车间印花/车间/仓库",
+								"uuid": "",
+								"userDept": 240209
+							}],
+							"searchTag": "三车间印花/车间",
+							"uuid": "",
+							"userDept": 2402
+						}],
+						"searchTag": "三车间印花",
+						"uuid": "",
+						"userDept": 24
+					}, {
+						"value": "437",
+						"key": 437,
+						"label": "测试部",
+						"searchTag": "测试部",
+						"uuid": "",
+						"userDept": 25
+					}],
+					"searchTag": "绍兴锦森印染有限公司",
+					"uuid": "",
+					"userDept": 1
+				}]
 
-      }
-    },
-    components: {
-      TagsView,
-      attdDatePicker
-      //    'ARangePicker':ARangePicker
-    },
-    created() {
-      this.mytime = moment('2015/01/01', this.dateFormat);
-    /*  console.log(moment(new Date("Aa")).format(""))
+			}
+		},
+		components: {
+			TagsView,
+			attdDatePicker
+			//    'ARangePicker':ARangePicker
+		},
+		created() {
+			this.mytime = moment('2015/01/01', this.dateFormat);
+			/*  console.log(moment(new Date("Aa")).format(""))
       moment.updateLocale(moment.locale(), { invalidDate: "Invalid Date Updated" })
 console.log(moment(new Date("Aa")).format(""));*/
-    },
-    methods: {
-      onChange(value) {
-        console.log(arguments)
-        this.value = value
-      },
-      toggleAdvanced() {
-        this.advanced = !this.advanced
-      },
-      onshow() {
-        this.visible = true;
-        this.$nextTick(() => {
-          this.form.setFieldsValue({
-            myabctime:moment('',this.dateFormat)
-          })
-        })
-      }
-    },
+		},
+		methods: {
+			onChange(value) {
+				console.log(arguments)
+				this.value = value
+			},
+			toggleAdvanced() {
+				this.advanced = !this.advanced
+			},
+			onshow() {
+				this.visible = true;
+				this.$nextTick(() => {
+					this.form.setFieldsValue({
+						myabctime: moment('', this.dateFormat)
+					})
+				})
+			}
+		},
 
-  }
+	}
 </script>
 
 <style scoped lang="scss">
-  .ant-form-inline .ant-form-item {
-    width: 100%;
-    display: flex;
-    /deep/ .ant-form-item-control-wrapper {
-      flex: 1;
-    }
-  }
+	.ant-form-inline .ant-form-item {
+		width: 100%;
+		display: flex;
+		/deep/ .ant-form-item-control-wrapper {
+			flex: 1;
+		}
+	}
 </style>
